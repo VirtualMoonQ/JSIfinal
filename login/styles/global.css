@@ -1,0 +1,33 @@
+body {
+  background: #eaecef;
+}
+
+.navbar-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 99999px;
+}
+
+.post-item {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  background: #fff;
+  border: 1px solid #d9d9d9;
+  transition: 0.3s;
+}
+.post-item p {
+  color: #000;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+.post-item:hover {
+  border: 1px solid #a8a8a8;
+}
+
+.post-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
