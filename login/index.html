@@ -22,11 +22,11 @@
                     <header>Login</header>
                     <form id="login-form">
                         <div class="field input-field">
-                            <input type="email" placeholder="Email" class="input">
+                            <input type="email" placeholder="Email" class="input" id="loginemail" name="loginemail">
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Password" class="password">
+                            <input type="password" placeholder="Password" class="password" id="loginpassword" name="loginpassword">
                             <i class='bx bx-hide eye-icon'></i>
                         </div>
 
@@ -67,10 +67,10 @@
     signInWithEmailAndPassword,
     signOut,
   } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
-  import { auth } from "./firebase.js";
+  import { auth } from "../firebase.js";
 
-  const form = document.querySelector("#login-form");
-  form.addEventListener("submit", (e) => {
+  const loginform = document.querySelector("#login-form");
+  loginform.addEventListener("submit", (e) => {
     e.preventDefault();
 
     document.querySelector("#login-btn").innerHTML = /*html*/ `
@@ -80,10 +80,10 @@
       </button> 
     `;
 
-    const email = form.email.value.trim();
-    const password = form.password.value;
+    const loginemail = loginform.loginemail.value.trim();
+    const loginpassword = loginform.loginpassword.value;
 
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, loginemail, loginpassword)
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
@@ -110,22 +110,17 @@
             <div class="form signup">
                 <div class="form-content">
                     <header>Signup</header>
-                    <form action="#">
+                    <form id = "signup-form" action="#">
                         <div class="field input-field">
-                            <input type="email" placeholder="Email" class="input">
+                            <input type="email" placeholder="Email" class="input" id="signupemail" name="signupemail">
                         </div>
 
                         <div class="field input-field">
-                            <input type="password" placeholder="Create password" class="password">
+                            <input type="password" placeholder="Create password" class="password" id="signuppassword" name="signuppassword">
                         </div>
 
-                        <div class="field input-field">
-                            <input type="password" placeholder="Confirm password" class="password">
-                            <i class='bx bx-hide eye-icon'></i>
-                        </div>
-
-                        <div class="field button-field">
-                            <button>Signup</button>
+                        <div class="field button-field" id="signup-bttn">
+                            <button type="submit">Signup</button>
                         </div>
                     </form>
 
@@ -152,7 +147,61 @@
 
             </div>
         </section>
+            <!-- Script for sign up -->
+<script type="module">
+    import {
+        createUserWithEmailAndPassword,
+        updateProfile,
+        signOut,
+        sendEmailVerification,
+    } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+    import { auth } from "../firebase.js";
+    
+    const signupform = document.querySelector("#signup-form");
+    signupform.addEventListener("submit", (e) => {
+        e.preventDefault();
+    
+        document.querySelector("#signup-bttn").innerHTML = /*html*/ `
+        <button type="button" disabled>
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span>Sign Up...</span>
+        </button>
+        `;
+    
+        const signupemail = signupform.signupemail.value.trim();
+        const signuppassword = signupform.signuppassword.value;
+    
+        createUserWithEmailAndPassword(auth, signupemail, signuppassword)
+        .then(async (userCredential) => {
+            const user = userCredential.user;
+            console.log(user);
+    
+            await sendEmailVerification(user);
+    
+            await signOut(auth);
+    
+            alert("Please verify your email");
+    
+            location.hash = "#/login";
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+            alert(errorCode);
+        })
+        .finally(() => {
+            document.querySelector("#signup-bttn").innerHTML = /*html*/ `
+            <button type="submit">Sign Up</button>
+            `;
+        });
+    });
 
+    // const ggSubmit = 
+    // ggSubmit.addEventListener(()=> {
+
+    // })
+</script>
         <!-- JavaScript -->
         <script src="js/script.js"></script>
     </body>
