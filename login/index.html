@@ -87,16 +87,13 @@
       .then((userCredential) => {
         const user = userCredential.user;
         console.log(user);
-        if (!user.emailVerified) {
-          signOut(auth);
-          throw { code: "Email not verified", message: "" };
-        }
+        window.location.replace("../giftos-html/index.html")
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
-        alert(errorCode);
+        alert("Wrong email or password!");
       })
       .finally(() => {
         document.querySelector("#login-btn").innerHTML = /*html*/ `
@@ -154,8 +151,11 @@
         updateProfile,
         signOut,
         sendEmailVerification,
+        signInWithPopup,
+        GoogleAuthProvider,
+        FacebookAuthProvider,
     } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
-    import { auth } from "../firebase.js";
+    import { auth, ggProvider, fbProvider } from "../firebase.js";
     
     const signupform = document.querySelector("#signup-form");
     signupform.addEventListener("submit", (e) => {
@@ -175,14 +175,10 @@
         .then(async (userCredential) => {
             const user = userCredential.user;
             console.log(user);
-    
-            await sendEmailVerification(user);
-    
+        
             await signOut(auth);
     
-            alert("Please verify your email");
-    
-            location.hash = "#/login";
+            location.hash = "#";
         })
         .catch((error) => {
             const errorCode = error.code;
@@ -196,11 +192,59 @@
             `;
         });
     });
+    //---------Script for GG login----------//
+    const ggSubmit = document.querySelector(".google")
+    ggSubmit.addEventListener("click", (e)=> {
+        signInWithPopup(auth, ggProvider)
+        .then((result) => {
+            // This gives you a Google Access Token. You can use it to access the Google API.
+            const credential = GoogleAuthProvider.credentialFromResult(result);
+            const token = credential.accessToken;
+            // The signed-in user info.
+            const user = result.user;
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+            window.location.replace("../giftos-html/index.html")
+        }).catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = GoogleAuthProvider.credentialFromError(error);
+            // ...
+        });
+    })
+    //---------Script for FB login-----------//
+    const fbSubmits = document.querySelectorAll(".facebook")
+    fbSubmits.forEach(fbSubmit => fbSubmit.addEventListener("click", (e) => {
+        signInWithPopup(auth, fbProvider)
+        .then((result) => {
+            // The signed-in user info.
+            const user = result.user;
 
-    // const ggSubmit = 
-    // ggSubmit.addEventListener(()=> {
+            // This gives you a Facebook Access Token. You can use it to access the Facebook API.
+            const credential = FacebookAuthProvider.credentialFromResult(result);
+            const accessToken = credential.accessToken;
 
-    // })
+            // IdP data available using getAdditionalUserInfo(result)
+            // ...
+            window.location.replace("../giftos-html/index.html")
+        })
+        .catch((error) => {
+            // Handle Errors here.
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // The email of the user's account used.
+            const email = error.customData.email;
+            // The AuthCredential type that was used.
+            const credential = FacebookAuthProvider.credentialFromError(error);
+
+            // ...
+        });
+    }))
+    
 </script>
         <!-- JavaScript -->
         <script src="js/script.js"></script>

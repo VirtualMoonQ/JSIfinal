@@ -1,4 +1,4 @@
-import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
 
@@ -18,4 +18,5 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const ggProvider = new GoogleAuthProvider();
+export const fbProvider = new FacebookAuthProvider();
 export const subscriptions = [];
