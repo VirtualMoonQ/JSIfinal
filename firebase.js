@@ -1,4 +1,4 @@
-import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider, setPersistence, browserSessionPersistence } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js";
 

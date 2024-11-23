@@ -12,6 +12,8 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
   <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> 
+  <link rel="stylesheet" href="./css/cart.css">
 
   <title>
     Giftos
@@ -67,30 +69,43 @@
               <a class="nav-link" href="contact.html">Contact Us</a>
             </li>
           </ul>
-          <div class="user_option">
-            <a href="">
+          <div class="user_option nav-item">
+            <a href="../login/index.html">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
                 Login
               </span>
             </a>
-            <a href="">
-              <i class="fa fa-shopping-bag" aria-hidden="true"></i>
-            </a>
-            <form class="form-inline ">
-              <button class="btn nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+            
+              <i class="bx bx-shopping-bag" id="card-icon" aria-hidden="true"></i>
+            
           </div>
+        </div>
+        <!-- Card -->
+        <div class="card nav-item">
+          <h2 class="card-title">Your Card</h2>
+          <!-- Content -->
+          <div class="card-content">
+              
+          </div>
+          <!-- Total -->
+          <div class="total">
+              <div class="total-title">Total</div>
+              <div class="total-price">$0</div>
+          </div>
+          <!-- Buy Button -->
+          <button type="button" class="btn-buy">Buy Now</button>
+          <!-- Card Close -->
+          <i class='bx bx-x' id="close-card"></i>
         </div>
       </nav>
     </header>
+    
     <!-- end header section -->
 
   </div>
   <!-- end hero area -->
-
+<script src="./js/cart.js"></script>
   <!-- why section -->
 
   <section class="why_section layout_padding">
