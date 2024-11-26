@@ -57,7 +57,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link" href="why.html">
-                Why Us
+                Sell
               </a>
             </li>
             <li class="nav-item">
@@ -180,7 +180,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <script src="js/custom.js"></script>
+  <script type="module">
+    import {auth} from "../firebase.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
 
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        let a = document.getElementById("loginLable");
+        a.innerHTML = `
+          <a href="../login/index.html">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <span>
+              ${user.email}
+            </span>
+          </a>
+          <i class="bx bx-shopping-bag" id="card-icon" aria-hidden="true"></i>
+        `;
+      } else {
+        // User is signed out
+        // ...
+      }
+    });
+  </script>
 </body>
 
 </html>
