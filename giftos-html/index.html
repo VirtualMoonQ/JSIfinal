@@ -64,14 +64,6 @@
                 Sell
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="testimonial.html">
-                Testimonial
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
-            </li>
           </ul>
           <div class="user_option" id="loginLable">
             <a href="../login/index.html">
@@ -901,6 +893,41 @@
           // ...
         }
       });
+    </script>
+    <script type="module">
+      import { auth } from "../firebase.js";
+      import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
+      import { collection, doc, setDoc, addDoc, getDoc, query, orderBy, startAfter, limit, getDocs } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore.js";
+      import { db } from "../firebase.js";
+
+      // Query the first page of docs
+      const first = query(collection(db, "items"), limit(100));
+      const documentSnapshots = await getDocs(first);
+
+      // Get the last visible document
+      const lastVisible = documentSnapshots.docs[documentSnapshots.docs.length - 1];
+      console.log("last", lastVisible.id);
+
+      // Construct a new query starting at this document,
+      // get the next 25 cities.
+      const next = query(collection(db, "items"),
+        startAfter(lastVisible),
+        limit(100 ));
+
+      const shoppee = document.querySelector(".shop-content");
+      documentSnapshots.forEach((element) => {
+        console.log(element.data().title)
+        shoppee.innerHTML += `
+          <div class="product-box">
+                <img src="${element.data().src}">
+                <h2 class="product-title">${element.data().title}</h2>
+                <span class="price">$${element.data().price}</span>
+                <i class='bx bx-shopping-bag add-card'></i>
+            </div>
+          `
+      }
+      );
+      // for(let i = 0; i < documentSnapshots.docs.length; i++){
     </script>
 </body>
 

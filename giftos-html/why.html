@@ -61,16 +61,8 @@
                 Sell
               </a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="testimonial.html">
-                Testimonial
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
-            </li>
           </ul>
-          <div class="user_option nav-item">
+          <div class="user_option nav-item" id="loginLable">
             <a href="../login/index.html">
               <i class="fa fa-user" aria-hidden="true"></i>
               <span>
@@ -140,7 +132,9 @@
   <script type="module">
     import { auth } from "../firebase.js";
     import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-auth.js";
-    import { collection, doc, setDoc, addDoc } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore.js";
+    import { collection, doc, setDoc, addDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.9.1/firebase-firestore.js";
+    import { db } from "../firebase.js";
+
 
     onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -159,15 +153,35 @@
         // ...
       }
     });
-    const sellform = document.querySelector("#myBtn")
-    sellform.addEventListener("submit", async(e) => {
+    let i = 0;
+    
+    const sellform = document.getElementById("myBtn")
+    sellform.addEventListener("click", async(e) => {
       e.preventDefault();
-
+      
+      
       const item =  await addDoc(collection(db, "items"), {
-      price: "Tokyo",
-      src: "Japan",
-      title: "asdasdad",
+      title: document.getElementById("pname").value,
+      price: document.getElementById("pricey").value,
+      src: document.getElementById("imgurl").value,
     });
+    
+    alert("Submitted successfully!");
+
+    
+    // const docRef = doc(db, "items", item.id);
+    // const docSnap = await getDoc(docRef);
+    // const itemData = docSnap.data();
+    // if (docSnap.exists()) {
+    //   console.log("Document data:", itemData);
+
+      
+      
+    // } else {
+    // // docSnap.data() will be undefined in this case
+    //   console.log("No such document!");
+    // }
+    
     
   })
   </script>
